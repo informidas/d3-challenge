@@ -30,29 +30,30 @@ var chartGroup = svg
   .append('g')
   .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-// Initial params
+// set values for the X and Y axis
 var chosenXaxis = 'poverty';
 var chosenYaxis = 'healthcare';
 
-// function used for updating x-scale const upon click on axis label
-function xScale(healthData, chosenXaxis) {
+// for setting x-axis scale
+function xScale(srcData, axis) {
   // create scales
   var xLinearScale = d3
     .scaleLinear()
     .domain([
-      d3.min(healthData, (d) => d[chosenXaxis] * 0.8),
-      d3.max(healthData, (d) => d[chosenXaxis] * 1.2),
+      d3.min(srcData, (d) => d[axis] * 0.8),
+      d3.max(srcData, (d) => d[axis] * 1.2),
     ])
     .range([0, width]);
   return xLinearScale;
 }
-function yScale(healthData, chosenYaxis) {
+//for setting y-axis scale
+function yScale(srcData, axis) {
   // create scales
   var yLinearScale = d3
     .scaleLinear()
     .domain([
-      d3.min(healthData, (d) => d[chosenYaxis]) * 0.8,
-      d3.max(healthData, (d) => d[chosenYaxis]) * 1.2,
+      d3.min(srcData, (d) => d[axis]) * 0.8,
+      d3.max(srcData, (d) => d[axis]) * 1.2,
     ])
     .range([height, 0]);
   return yLinearScale;
@@ -114,7 +115,7 @@ function yScale(healthData, chosenYaxis) {
   // Create group for  3 x- axis labels
   var xlabelsGroup = chartGroup
     .append('g')
-    .classed('adj-loction',true)
+    .classed('adj-loction', true)
     .attr('transform', `translate(${width / 2}, ${height + 20 + margin.top})`);
 
   // Create group for  3 y- axis labels
